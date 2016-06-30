@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/label.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.draw.css" />
+        <link rel="stylesheet" href="css/leaflet.measurecontrol.css" />
+        <script src="js/leaflet.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/label.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.draw.js"></script>
+        <script src="js/leaflet.measurecontrol.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="data/json_Cidades0.js"></script>
+        <script src="data/json_Regioes1.js"></script>
+        <script src="data/json_Educacao2.js"></script>
+        <script src="data/json_MeioAmbiente3.js"></script>
+        <script src="data/json_AssistenciaSocial4.js"></script>
+        <script src="data/json_PessoasComDeficiencia5.js"></script>
+        <script src="data/json_Cultura6.js"></script>
+        <script src="data/json_Saude7.js"></script>
+        <script src="data/json_ApoioMaterial8.js"></script>
+        <script src="data/json_EconomiaSolidaria9.js"></script>
+        <script src="data/json_CriancaseAdolescentes10.js"></script>
+        <script src="data/json_Idosos11.js"></script>
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            measureControl:true,
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-23.2841592458,-46.2361477393],[-22.8531156779,-45.6037881547]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        var initialOrder = new Array();
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < initialOrder.length; index++) {
+                map.removeLayer(initialOrder[index]);
+                map.addLayer(initialOrder[index]);
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+        layerControl = L.control.layers({},{},{collapsed:false});
+
+        function doStyleCidades0(feature) {
+            return {
+                weight: 3.44,
+                color: '#000000',
+                fillColor: '#badd69',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 0.198039215686,
+                fillOpacity: 0.198039215686
+            };
+        }
+        var json_Cidades0JSON = new L.geoJson(json_Cidades0, {
+            style: doStyleCidades0
+        });
+        layerOrder[layerOrder.length] = json_Cidades0JSON;
+        bounds_group.addLayer(json_Cidades0JSON);
+        initialOrder[initialOrder.length] = json_Cidades0JSON;
+        feature_group.addLayer(json_Cidades0JSON);
+
+        function doStyleRegioes1(feature) {
+			switch (feature.properties.Regiao) {
+                case 'Centro':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#1b08f0',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                case 'Leste':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#8b00ae',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                case 'Norte':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ff7f00',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                case 'Oeste':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ffff00',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                case 'Sao Francisco Xavier':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ee85d5',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                case 'Sudeste':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#33a02c',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                case 'Sul':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ff0000',
+                    color: '#728584',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.25',
+                    fillOpacity: '0.25',
+                };
+                break;
+
+                default:
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ffffff',
+                    color: 'none',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '0.0',
+                    fillOpacity: '0.0',
+                };
+                break;
+
+            }
+        }
+        var json_Regioes1JSON = new L.geoJson(json_Regioes1, {
+            style: doStyleRegioes1
+        });
+        layerOrder[layerOrder.length] = json_Regioes1JSON;
+        bounds_group.addLayer(json_Regioes1JSON);
+        initialOrder[initialOrder.length] = json_Regioes1JSON;
+        feature_group.addLayer(json_Regioes1JSON);
+        function pop_Educacao2(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleEducacao2() {
+            return {
+                radius: 4.0,
+                fillColor: '#b2df8a',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerEducacao2(feature, latlng) {
+            return L.circleMarker(latlng, doStyleEducacao2())
+        }
+        var json_Educacao2JSON = new L.geoJson(json_Educacao2, {
+            onEachFeature: pop_Educacao2, 
+            pointToLayer: doPointToLayerEducacao2
+            });
+        layerOrder[layerOrder.length] = json_Educacao2JSON;
+
+        bounds_group.addLayer(json_Educacao2JSON);
+        initialOrder[initialOrder.length] = json_Educacao2JSON;
+        feature_group.addLayer(json_Educacao2JSON);
+        function pop_MeioAmbiente3(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleMeioAmbiente3() {
+            return {
+                radius: 4.0,
+                fillColor: '#33a02c',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerMeioAmbiente3(feature, latlng) {
+            return L.circleMarker(latlng, doStyleMeioAmbiente3())
+        }
+        var json_MeioAmbiente3JSON = new L.geoJson(json_MeioAmbiente3, {
+            onEachFeature: pop_MeioAmbiente3, 
+            pointToLayer: doPointToLayerMeioAmbiente3
+            });
+        layerOrder[layerOrder.length] = json_MeioAmbiente3JSON;
+
+        bounds_group.addLayer(json_MeioAmbiente3JSON);
+        initialOrder[initialOrder.length] = json_MeioAmbiente3JSON;
+        feature_group.addLayer(json_MeioAmbiente3JSON);
+        function pop_AssistenciaSocial4(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleAssistenciaSocial4() {
+            return {
+                radius: 4.0,
+                fillColor: '#1b08f0',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerAssistenciaSocial4(feature, latlng) {
+            return L.circleMarker(latlng, doStyleAssistenciaSocial4())
+        }
+        var json_AssistenciaSocial4JSON = new L.geoJson(json_AssistenciaSocial4, {
+            onEachFeature: pop_AssistenciaSocial4, 
+            pointToLayer: doPointToLayerAssistenciaSocial4
+            });
+        layerOrder[layerOrder.length] = json_AssistenciaSocial4JSON;
+
+        bounds_group.addLayer(json_AssistenciaSocial4JSON);
+        initialOrder[initialOrder.length] = json_AssistenciaSocial4JSON;
+        feature_group.addLayer(json_AssistenciaSocial4JSON);
+        function pop_PessoasComDeficiencia5(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStylePessoasComDeficiencia5() {
+            return {
+                radius: 4.0,
+                fillColor: '#e80013',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerPessoasComDeficiencia5(feature, latlng) {
+            return L.circleMarker(latlng, doStylePessoasComDeficiencia5())
+        }
+        var json_PessoasComDeficiencia5JSON = new L.geoJson(json_PessoasComDeficiencia5, {
+            onEachFeature: pop_PessoasComDeficiencia5, 
+            pointToLayer: doPointToLayerPessoasComDeficiencia5
+            });
+        layerOrder[layerOrder.length] = json_PessoasComDeficiencia5JSON;
+
+        bounds_group.addLayer(json_PessoasComDeficiencia5JSON);
+        initialOrder[initialOrder.length] = json_PessoasComDeficiencia5JSON;
+        feature_group.addLayer(json_PessoasComDeficiencia5JSON);
+        function pop_Cultura6(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleCultura6() {
+            return {
+                radius: 4.0,
+                fillColor: '#ffff00',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerCultura6(feature, latlng) {
+            return L.circleMarker(latlng, doStyleCultura6())
+        }
+        var json_Cultura6JSON = new L.geoJson(json_Cultura6, {
+            onEachFeature: pop_Cultura6, 
+            pointToLayer: doPointToLayerCultura6
+            });
+        layerOrder[layerOrder.length] = json_Cultura6JSON;
+
+        bounds_group.addLayer(json_Cultura6JSON);
+        initialOrder[initialOrder.length] = json_Cultura6JSON;
+        feature_group.addLayer(json_Cultura6JSON);
+        function pop_Saude7(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleSaude7() {
+            return {
+                radius: 4.0,
+                fillColor: '#ee91d2',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerSaude7(feature, latlng) {
+            return L.circleMarker(latlng, doStyleSaude7())
+        }
+        var json_Saude7JSON = new L.geoJson(json_Saude7, {
+            onEachFeature: pop_Saude7, 
+            pointToLayer: doPointToLayerSaude7
+            });
+        layerOrder[layerOrder.length] = json_Saude7JSON;
+
+        bounds_group.addLayer(json_Saude7JSON);
+        initialOrder[initialOrder.length] = json_Saude7JSON;
+        feature_group.addLayer(json_Saude7JSON);
+        function pop_ApoioMaterial8(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleApoioMaterial8() {
+            return {
+                radius: 4.0,
+                fillColor: '#000000',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerApoioMaterial8(feature, latlng) {
+            return L.circleMarker(latlng, doStyleApoioMaterial8())
+        }
+        var json_ApoioMaterial8JSON = new L.geoJson(json_ApoioMaterial8, {
+            onEachFeature: pop_ApoioMaterial8, 
+            pointToLayer: doPointToLayerApoioMaterial8
+            });
+        layerOrder[layerOrder.length] = json_ApoioMaterial8JSON;
+
+        bounds_group.addLayer(json_ApoioMaterial8JSON);
+        initialOrder[initialOrder.length] = json_ApoioMaterial8JSON;
+        feature_group.addLayer(json_ApoioMaterial8JSON);
+        function pop_EconomiaSolidaria9(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleEconomiaSolidaria9() {
+            return {
+                radius: 4.0,
+                fillColor: '#8b00ae',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerEconomiaSolidaria9(feature, latlng) {
+            return L.circleMarker(latlng, doStyleEconomiaSolidaria9())
+        }
+        var json_EconomiaSolidaria9JSON = new L.geoJson(json_EconomiaSolidaria9, {
+            onEachFeature: pop_EconomiaSolidaria9, 
+            pointToLayer: doPointToLayerEconomiaSolidaria9
+            });
+        layerOrder[layerOrder.length] = json_EconomiaSolidaria9JSON;
+
+        bounds_group.addLayer(json_EconomiaSolidaria9JSON);
+        initialOrder[initialOrder.length] = json_EconomiaSolidaria9JSON;
+        feature_group.addLayer(json_EconomiaSolidaria9JSON);
+        function pop_CriancaseAdolescentes10(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleCriancaseAdolescentes10() {
+            return {
+                radius: 4.0,
+                fillColor: '#ff7f00',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerCriancaseAdolescentes10(feature, latlng) {
+            return L.circleMarker(latlng, doStyleCriancaseAdolescentes10())
+        }
+        var json_CriancaseAdolescentes10JSON = new L.geoJson(json_CriancaseAdolescentes10, {
+            onEachFeature: pop_CriancaseAdolescentes10, 
+            pointToLayer: doPointToLayerCriancaseAdolescentes10
+            });
+        layerOrder[layerOrder.length] = json_CriancaseAdolescentes10JSON;
+
+        bounds_group.addLayer(json_CriancaseAdolescentes10JSON);
+        initialOrder[initialOrder.length] = json_CriancaseAdolescentes10JSON;
+        feature_group.addLayer(json_CriancaseAdolescentes10JSON);
+        function pop_Idosos11(feature, layer) {
+            var popupContent = '<table><tr><th scope="row">Lat</th><td>' + (feature.properties['Lat'] !== null ? Autolinker.link(String(feature.properties['Lat'])) : '') + '</td></tr><tr><th scope="row">Long</th><td>' + (feature.properties['Long'] !== null ? Autolinker.link(String(feature.properties['Long'])) : '') + '</td></tr><tr><th scope="row">Nome</th><td>' + (feature.properties['Nome'] !== null ? Autolinker.link(String(feature.properties['Nome'])) : '') + '</td></tr><tr><th scope="row">Atividades Desenvolvidas</th><td>' + (feature.properties['Atividades Desenvolvidas'] !== null ? Autolinker.link(String(feature.properties['Atividades Desenvolvidas'])) : '') + '</td></tr><tr><th scope="row">Areas</th><td>' + (feature.properties['Areas'] !== null ? Autolinker.link(String(feature.properties['Areas'])) : '') + '</td></tr><tr><th scope="row">Custo</th><td>' + (feature.properties['Custo'] !== null ? Autolinker.link(String(feature.properties['Custo'])) : '') + '</td></tr><tr><th scope="row">Endereco</th><td>' + (feature.properties['Endereco'] !== null ? Autolinker.link(String(feature.properties['Endereco'])) : '') + '</td></tr><tr><th scope="row">Horario</th><td>' + (feature.properties['Horario'] !== null ? Autolinker.link(String(feature.properties['Horario'])) : '') + '</td></tr><tr><th scope="row">Telefone</th><td>' + (feature.properties['Telefone'] !== null ? Autolinker.link(String(feature.properties['Telefone'])) : '') + '</td></tr><tr><th scope="row">Email</th><td>' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td></tr><tr><th scope="row">Site</th><td>' + (feature.properties['Site'] !== null ? Autolinker.link(String(feature.properties['Site'])) : '') + '</td></tr><tr><th scope="row">Facebook</th><td>' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleIdosos11() {
+            return {
+                radius: 4.0,
+                fillColor: '#ffffff',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerIdosos11(feature, latlng) {
+            return L.circleMarker(latlng, doStyleIdosos11())
+        }
+        var json_Idosos11JSON = new L.geoJson(json_Idosos11, {
+            onEachFeature: pop_Idosos11, 
+            pointToLayer: doPointToLayerIdosos11
+            });
+        layerOrder[layerOrder.length] = json_Idosos11JSON;
+
+        bounds_group.addLayer(json_Idosos11JSON);
+        initialOrder[initialOrder.length] = json_Idosos11JSON;
+        feature_group.addLayer(json_Idosos11JSON);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var baseMaps = {'OSM': basemap0};
+        L.control.layers(baseMaps,{'<img src="legend/Idosos11.png" /> Idosos': json_Idosos11JSON,'<img src="legend/CriancaseAdolescentes10.png" /> Criancas e Adolescentes': json_CriancaseAdolescentes10JSON,'<img src="legend/EconomiaSolidaria9.png" /> Economia Solidaria': json_EconomiaSolidaria9JSON,'<img src="legend/ApoioMaterial8.png" /> Apoio Material': json_ApoioMaterial8JSON,'<img src="legend/Saude7.png" /> Saude': json_Saude7JSON,'<img src="legend/Cultura6.png" /> Cultura': json_Cultura6JSON,'<img src="legend/PessoasComDeficiencia5.png" /> Pessoas Com Deficiencia': json_PessoasComDeficiencia5JSON,'<img src="legend/AssistenciaSocial4.png" /> Assistencia Social': json_AssistenciaSocial4JSON,'<img src="legend/MeioAmbiente3.png" /> Meio Ambiente': json_MeioAmbiente3JSON,'<img src="legend/Educacao2.png" /> Educacao': json_Educacao2JSON,'Regioes<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_Centro.png" /> Centro<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_Leste.png" /> Leste<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_Norte.png" /> Norte<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_Oeste.png" /> Oeste<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_SaoFranciscoXavier.png" /> Sao Francisco Xavier<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_Sudeste.png" /> Sudeste<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_Sul.png" /> Sul<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Regioes1_.png" /> <br />': json_Regioes1JSON,'<img src="legend/Cidades0.png" /> Cidades': json_Cidades0JSON,},{collapsed:false}).addTo(map);
+        map.locate({setView: true, maxZoom: 16});
+        function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+            L.marker(e.latlng).addTo(map)
+            .bindPopup("You are within " + radius + " meters from this point")
+            .openPopup();
+            L.circle(e.latlng, radius).addTo(map);
+        }
+        map.on('locationfound', onLocationFound);
+        L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
+        stackLayers();
+        map.on('overlayadd', restackLayers);
+        </script>
+    </body>
+</html>
